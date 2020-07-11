@@ -24,7 +24,7 @@ LeetCode 习题记录
         时间复杂度：O(n)
         空间复杂度：O(1）;
         
-    28 实现strStr() : 在 haystack 字符串中找出 needle 字符串出现的第一个位置 (从0开始)
+    28:实现strStr() : 在 haystack 字符串中找出 needle 字符串出现的第一个位置 (从0开始)
            解法一：暴力解法：以needle为参照对象，逐个和haystack比对。
            解法二：滑动窗口 : 用到了字符串substring函数，优点像作弊。
                 eg: haystack = abcdefg ; needle = cde;执行过程如下：
@@ -34,6 +34,11 @@ LeetCode 习题记录
                                cde
                     step 2：  abcdefg
                                 cde
+           //Todo
            解法三：KMP（看毛片算法）：动作太复杂没学会！
+    14:最长公共前缀----解题思路同 28，先以首个字符串为公共前缀：str，然后与其余字符串逐个比较，查找公共前缀即可
+       //Todo
+       思维拓展：查找字符串的前缀和后缀最大公共长度（KMP）
+    
     
     
