@@ -24,5 +24,16 @@ LeetCode 习题记录
         时间复杂度：O(n)
         空间复杂度：O(1）;
         
+    28 实现strStr() : 在 haystack 字符串中找出 needle 字符串出现的第一个位置 (从0开始)
+           解法一：暴力解法：以needle为参照对象，逐个和haystack比对。
+           解法二：滑动窗口 : 用到了字符串substring函数，优点像作弊。
+                eg: haystack = abcdefg ; needle = cde;执行过程如下：
+                    step 1：  abcdefg
+                              cde
+                    step 2：  abcdefg
+                               cde
+                    step 2：  abcdefg
+                                cde
+           解法三：KMP（看毛片算法）：动作太复杂没学会！
     
     
