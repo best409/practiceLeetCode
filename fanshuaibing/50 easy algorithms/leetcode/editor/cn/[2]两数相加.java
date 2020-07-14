@@ -108,24 +108,27 @@ class Solution {
         node.next = null;
         return node;
     }
+}
 
-    public void getRoute(ListNode head,ListNode tmp,boolean status){
-        while (tmp != null) {
-            if (status) {
-                if (++tmp.val >= 10) {
-                    tmp.val = tmp.val - 10;
-                    status = true;
-                } else {
-                    status = false;
-                }
-                head.next = tmp;
-                head = head.next;
-                tmp = tmp.next;
-            } else {
-                head.next = tmp;
-                break;
-            }
+
+//LeetCode解法：边计算边构建节点
+public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    ListNode dummyHead = new ListNode(-1), pre = dummyHead;
+    int t = 0;
+    while (l1 != null || l2 != null || t != 0) {
+        if (l1 != null) {
+            t += l1.val;
+            l1 = l1.next;
         }
+        if (l2 != null) {
+            t += l2.val;
+            l2 = l2.next;
+        }
+        pre.next = new ListNode(t % 10);
+        pre = pre.next;
+        t /= 10;
     }
+
+    return dummyHead.next;
 }
 //leetcode submit region end(Prohibit modification and deletion)
