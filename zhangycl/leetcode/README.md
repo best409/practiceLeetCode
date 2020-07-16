@@ -1,4 +1,4 @@
-# LeetCode 解法总结
+# LeetCode 解法总结（要求：执行效率超90%）
 ## 常用的时间复杂度
 O(1) < O(logn) < (n) < O(nlogn) < O(n^2) < O(n^3) < O(2^n) < O(n!) < O(n^n)
 
@@ -12,10 +12,10 @@ O(1) < O(logn) < (n) < O(nlogn) < O(n^2) < O(n^3) < O(2^n) < O(n!) < O(n^n)
         * 暴力破解，两重循环进行遍历
       * 时间复杂度：T(n) = O(n^2)，空间复杂度：S(n) = O(1)
   * 解法2：
-      * 使用hash table，空间换时间，一重循环进行遍历耗时O(n)，另一重使用 hash table 耗时O(1)
+      * 两边哈希表，使用hash table，空间换时间，一重循环进行遍历耗时O(n)，另一重使用 hash table 耗时O(1)
     * 时间复杂度：T(n) = O(n)， 空间复杂度：S(n) = O(n)
   * 解法3【推荐】：
-        * 使用hash table，空间换时间，同方法2，将两个for循环合并为一个
+        * 一遍哈希表，使用hash table，空间换时间，同方法2，将两个for循环合并为一个
       * 时间复杂度：T(n) = O(n)，空间复杂度：S(n) = O(n)
   * 代码
 ```
@@ -24,7 +24,8 @@ public int[] twoSum(int[] nums, int target) {
     for (int i = 0; i < nums.length ; i++) {
         int result = target - nums[i];
         if(map.containsKey(result) && map.get(result) != i) {
-            return new int[]{i,map.get(result)};
+        	//注意i和map.get(result) 的先后位置
+            return new int[]{map.get(result), i};
         }
         map.put(nums[i], i);
     }
@@ -66,29 +67,73 @@ public int reverse(int x) {
    * 代码
 ```
 public boolean isPalindrome(int x) {
-    if (x < 0) return false;
-    int digit = (int) (Math.log(x) / Math.log(10) +1); //总位数
-    //后半部分倒转后的结果
-    int revert = 0;
-    int val = 0;
-    for (int i = 0; i < digit / 2; i++) {
-        val = x % 10;
+    // 特殊情况：
+    // 如上所述，当 x < 0 时，x 不是回文数。
+    // 同样地，如果数字的最后一位是 0，为了使该数字为回文，
+    // 则其第一位数字也应该是 0
+    // 只有 0 满足这一属性
+    if (x < 0 || (x % 10 == 0 && x != 0)) return false;
+    
+    int revertedNumber = 0;
+    //判断 x 是不是小于 revertNum ，当它小于的时候，说明数字已经对半或者过半了
+    while (x > revertedNumber) {    	
+        revertedNumber = revertedNumber * 10 + x % 10;
         x /= 10;
-        revert = revert * 10 + val;
     }
+    
+    //判断奇偶数情况
+    return x == revertedNumber || x == revertedNumber / 10;
+}
+```
+### 4.  罗马数字转整数（题号：13）
+  * 标签：数学、字符串
+  * 解法1：
+	* 暴力求解，遍历字符串
+	* 时间复杂度：T(n) = O(n)，空间复杂度：S(n) = O(1)
+  * 解法2：
+	* 利用题目中的规则，若数字大的字母在前，而数字小的字母在后则做加法，反之则做减法。
+	* 注意事项：用switch匹配比用HashMap匹配快很多
+	* 时间复杂度：T(n) = O((n)，空间复杂度：S(n) = O(1) 
+   * 代码
+```
+public int romanToInt(String s) {
+    int sum = 0;
+    int preNum = getValue(s.charAt(0));
+    for (int i = 1; i < s.length(); i++) {
+        int num = getValue(s.charAt(i));
+        if (preNum >= num) {
+        	sum += preNum;
+        } else {
+            //前面的数值小于后边的，做减法
+            sum -= preNum;
+        }
+        preNum = num;
+    }
+    //此时preNum表示的是最后一个数字的值
+    sum += preNum;
+    return sum;
+}
 
-    //位数为偶数
-    if (digit % 2 == 0 && revert == x)  return  true;
-    //位数为偶数
-    if (digit % 2 != 0 && revert == x / 10)  return  true;
-    return  false;
+/*
+* 根据罗马数字得到对应的数值
+* */
+private int getValue(char ch) {
+    switch (ch) {
+        case 'I' : return 1;
+        case 'V' : return 5;
+        case 'X' : return 10;
+        case 'L' : return 50;
+        case 'C' : return 100;
+        case 'D' : return 500;
+        case 'M' : return 1000;
+        default: return 0;
+    }
 }
 ```
 
-
 ## 中等
 
-### 1.  两数相加（题号：2）
+### 1.  两数相加（题号：2）（未超过90%）
 * 标签：链表、数学
 * 解法：模拟两数相加，每次相加都会产生进位 carry,
     * carry max 1,because max 9+9+1 = 19
@@ -118,7 +163,7 @@ public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
     return dummyHead.next;
 }
 ```
-### 2.  无重复字符的最长子串（题号：3）
+### 2.  无重复字符的最长子串（题号：3）未超90%
 * 标签：哈希表、双指针、字符串、Sliding Window
 * 解法1：
 	* 暴力破解，两重循环穷举所有子串O(n^2)，一次遍历使用 hash 判断子串是否重复O(n)
@@ -126,7 +171,7 @@ public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 * 解法2：
 	* 双指针+滑动窗口+备忘录，一重循环遍历字符串O(n)，用两个指针维护一个滑动窗口，用 HashSet 判断滑动窗口是否重复O(1)
 	* 时间复杂度：T(n) = O(n)，空间复杂度：S(n) = O(min(m,n)),  m和n分别表示子串和父串长度，hash保存子串
-* 解法3【推荐】：
+* 解法3【推荐】：（未超过90%）
 	* 双指针+滑动窗口+备忘录+剪枝，一重循环遍历字符串O(n)，用两个指针维护一个滑动窗口，用 HashMap 判断滑动窗口是否重复O(1), 因为 HashMap 可以存储下标跳跃剪枝
 	* 时间复杂度：T(n) = O(n)，空间复杂度：S(n) = O(min(m,n)),  m和n分别表示子串和父串长度，hash保存子串
 * 解法4：
