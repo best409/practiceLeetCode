@@ -31,8 +31,7 @@ public class P1TwoSum {
 
             /*
              * 解法1：暴力破解，两重循环进行遍历
-             * 时间复杂度：T(n) = O(n^2)
-             * 空间复杂度：S(n) = O(1)
+             * 时间复杂度：T(n) = O(n^2)，空间复杂度：S(n) = O(1)
              * */
            /* for (int i = 0; i < nums.length; i++) {
                 for (int j = i + 1; j < nums.length; j++) {
@@ -49,7 +48,7 @@ public class P1TwoSum {
              * 时间复杂度：T(n) = O(n)
              * 空间复杂度：S(n) = O(n)
              * */
-           /* Map<Integer, Integer> map = new HashMap<>();
+            /*Map<Integer, Integer> map = new HashMap<>();
             for (int i = 0; i < nums.length ; i++) {
                 map.put(nums[i], i);
             }
@@ -70,7 +69,7 @@ public class P1TwoSum {
             for (int i = 0; i < nums.length ; i++) {
                 int result = target - nums[i];
                 if(map.containsKey(result) && map.get(result) != i) {
-                    return new int[]{i,map.get(result)};
+                    return new int[]{map.get(result), i};
                 }
                 map.put(nums[i], i);
             }
