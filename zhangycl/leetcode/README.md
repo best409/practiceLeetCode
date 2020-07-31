@@ -1,6 +1,6 @@
 # LeetCode 解法总结（要求：执行效率超90%）
 ## 常用的时间复杂度
-O(1) < O(logn) < (n) < O(nlogn) < O(n^2) < O(n^3) < O(2^n) < O(n!) < O(n^n)
+O(1) < O(logn) <O (n) < O(nlogn) < O(n^2) < O(n^3) < O(2^n) < O(n!) < O(n^n)
 
 
 
